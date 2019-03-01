@@ -97,3 +97,7 @@ JWT
 	. Header -definies hashing algorthm
 	. Payload -expiry, issued at the time ,public claims
 	.signature - has of the header and payload and a secret
+
+
+Safe Methods:
+- an HTTP method is deemed safe if the method itself never modifies a resource eg GET method
