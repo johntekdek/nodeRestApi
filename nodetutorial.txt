@@ -1,0 +1,99 @@
+Representational State Transfer
+
+- Transferring representations
+- A represenattion is a resource so we aare transfering resources by http protocol to an application state (client)
+
+Stateless
+- Every single request form client holds all the necessary infor to be able to serve the resource entirely
+- No state is being managed by the server
+
+
+BASIC API DESIGN PRINCIPLES (6) .
+
+1. RESOURCES
+	key biz decission. these are bussines entities witha plural noun name i.e - Products,Employes,Orders,payments
+- Data that makes up an entitiy can from multiple sources i.e producst data can come from 2 databases
+-
+
+
+2. RESOURCE IDENTIFIERS
+- URI- UNIFORM RESOURCE IDENTIFIER
+- SHOULD BE UNIQUE PER ENTITY and/or per collection
+- Access resource via URIs eg http://domain.com/departments
+- 
+
+3. RESOURCE HIERARCHY
+- Group resources in a logical way
+- Think about hierarchies ahead of time 
+	. Connection between a Product and an Order
+	. Should list all orders for Product 12 --> /products/12/orders
+- Use HATEOAS to navigate between resources
+
+4. RESOURCE REPRESENTATION
+- Defines the data representation of the returned resource
+- Typically either XML/JSON
+
+5 HTTP methods
+- GET - fecthes resource === 200(ok),404(not found)
+- POST - creates a new == 201 (Created),400 (Bad Request),204(no content),200(ok)
+- PUT - creates or replaces a resource
+- PATCH - partially updates a resource == 204(no content) or 400/409 
+- DELETE ===204(no content) or 404 (Not Found)
+
+
+1xxx - Informational messages
+2xx - Success messages
+3xx - Redirection messages
+
+
+HATEOAS
+Hypertext As The Engine of Application State
+- represent the realtionship between resources via links
+- Links placed inside resources to aloww "navigation"
+4xx - Client Error messages
+5xx - Server Error messages
+
+
+6 Versioning
+" make sure this is documented properly" what does version 1 return, what does version 2 return
+- API versioning via:
+ .URI - Version is part of the URI
+	. /api/v1/products vs /api/v2/products
+ . Query String
+	./api/products?v=1 vs /api/products?v=2
+ . Header versioning
+	. HTTP custom header for version , e.g X-API-VERSION=1
+
+7 Query params
+- Normally used for filtering,sorting and pagination
+- Denoted by the question mark
+- /api/users?filter=coffee&page=2
+
+
+8 AUTENTICATION
+- Autehntication vs Authorization
+	. Authentication - verify a use (e.g with username and password)
+	. authorization - verify that access is granted (to resource, to action)
+- API Keys:
+	. long random string
+	. should be included as a request header (Authorization)
+	- Public and Private keys
+	. public key : can be shared 
+	. private key: server to server comunication - never share
+api key is usually provided by the api owner
+	
+OAuth
+. Open Authentication(open statndard)
+. Latest is OAuth 2.0 framework
+. Often seen when using twiter, Facebook ,google
+. App sends an application key and secret to an authentication server
+. If authenticated, access token is received
+. access token is used for making a request to the API
+. Access toekn can also define permissions
+
+JWT 
+. JWT token - base64encoded version of data
+. Consists of three parts , separated by dots
+	. Header -definies hashing algorthm
+	. Payload -expiry, issued at the time ,public claims
+	.signature - has of the header and payload and a secret
