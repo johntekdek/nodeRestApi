@@ -2,21 +2,20 @@ const express = require("express");
 const router = express.Router();
 const app = express();
 const settings = require("./settings");
-const mysql = require("mysql");
-const connection = mysql.createConnection(settings.database);
+
+const knex = require("knex")({
+  client: "mysql",
+  connection: settings.database
+});
+
+app.locals.knex = knex;
+
 const routes = require("./routes");
 
-router.get("/employees", routes.employees.listAllEmployess);
+router.get("/employees", routes.employees.listAllEmployees);
 
 app.use("/api", router);
 
-connection.connect(error => {
-  if (error) {
-    console.error("Error connectinf to the database ", error);
-    return process.exit();
-  }
-
-  app.listen(settings.APIServerPort, () =>
-    console.info(`Server is listening on ${settings.APIServerPort}`)
-  );
-});
+app.listen(settings.APIServerPort, () =>
+  console.info(`Server is listening on ${settings.APIServerPort}`)
+);
