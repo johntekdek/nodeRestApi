@@ -1,10 +1,20 @@
 function listAllEmployees(req, res) {
-  const { knex } = req.app.locals;
-  knex
-    .select("*")
-    .from("employees")
-    .then(data => res.status(200).json(data))
-    .catch(error => res.status(500).json(error));
+  const { collection } = req.app.locals;
+  collection.find({}).toArray()
+  .then(response => res.status(200).json(response))
+  .catch(error => console.error(error));
+
+}
+
+function listOneEmployee(req, res) {
+
+}
+
+function createEmployee(req, res) {
+
+}
+function updateEmployee(req, res) {
+
 }
 
 module.exports = {
