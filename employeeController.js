@@ -1,8 +1,12 @@
-const data = require ('./data');
-function listAllEmployess (req, res) {
-  return res.status (200).json (data);
+function listAllEmployees(req, res) {
+  const { knex } = req.app.locals;
+  knex
+    .select("*")
+    .from("employees")
+    .then(data => res.status(200).json(data))
+    .catch(error => res.status(500).json(error));
 }
 
 module.exports = {
-  listAllEmployess,
+  listAllEmployees
 };
